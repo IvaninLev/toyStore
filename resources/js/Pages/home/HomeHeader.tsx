@@ -14,7 +14,7 @@ export default function HomeHeader() {
                     justifyContent:'center',
                 }}
             >
-                <div className="w-[400px] h-[400px] bg-white"></div>
+                <div className="w-[400px] h-[450px] bg-white"></div>
             </div>
     );
 }
