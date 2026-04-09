@@ -7,13 +7,19 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
+.wooden-scrollbars .os-scrollbar-horizontal {
+    --os-size: 7px;
+    --os-handle-bg: #A5C926;
+}
+
+
 @theme {
     --font-varela: "Varela Round", sans-serif;
 
-    --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
 
 
     --radius-lg: var(--radius);
