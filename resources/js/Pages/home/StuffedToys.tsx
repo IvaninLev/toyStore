@@ -31,7 +31,7 @@ export default function WoodenToys({ products = [] }: { products: Toy[] }) {
                                 className="h-46.25 w-46.25 object-contain"
                                 alt={product.name}
                             />
-                            <CardTitle className="  text-center">
+                            <CardTitle className="text-center">
                                 {product.name}, {product.type}
                             </CardTitle>
                             <Button className="h-12 w-auto rounded-3xl bg-[#A5C926] px-10 text-white">
