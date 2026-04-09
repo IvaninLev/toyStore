@@ -1,9 +1,9 @@
+import { Button } from '@headlessui/react';
 import 'overlayscrollbars/overlayscrollbars.css';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 import React from 'react';
 import { Card, CardTitle } from '@/components/ui/card';
 import type { Toy } from '@/types';
-import { Button } from '@headlessui/react';
 
 export default function WoodenToys({ products = [] }: { products: Toy[] }) {
     return (
