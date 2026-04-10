@@ -3,9 +3,12 @@ import 'overlayscrollbars/overlayscrollbars.css';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 import React from 'react';
 import { Card, CardTitle } from '@/components/ui/card';
+import { useCartStore } from '@/stores/useCartStore';
 import type { Toy } from '@/types';
 
 export default function WoodenToys({ products = [] }: { products: Toy[] }) {
+    const addToCart = useCartStore((state) => state.addToCart);
+
     return (
         <section className="container bg-[#F8F8F8] text-black">
             <h1 className="ml-[12.5%] pt-10 text-3xl">Stuffed Toys</h1>
@@ -34,7 +37,10 @@ export default function WoodenToys({ products = [] }: { products: Toy[] }) {
                             <CardTitle className="text-center">
                                 {product.name}, {product.type}
                             </CardTitle>
-                            <Button className="h-12 w-auto rounded-3xl bg-[#A5C926] px-10 text-white">
+                            <Button
+                                onClick={() => addToCart(product)}
+                                className="h-12 w-auto cursor-pointer rounded-3xl bg-[#A5C926] px-10 text-white"
+                            >
                                 ${product.price}
                             </Button>
                         </Card>

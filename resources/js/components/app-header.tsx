@@ -1,13 +1,16 @@
 import { Icon } from '@iconify/react';
-import type { BreadcrumbItem } from '@/types';
 import { Link } from '@inertiajs/react';
-type Props = {
-    breadcrumbs?: BreadcrumbItem[];
-};
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { useCartStore } from '@/stores/useCartStore';
 
-export function AppHeader({}: Props) {
+export function AppHeader() {
+    const [cartOpen, setCartOpen] = useState(false);
+    const { cart, removeFromCart, getTotalPrice, clearCart } = useCartStore();
+
     return (
-        <header>
+        <header className="relative">
             <div className="bg-green-500 text-white">
                 <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 text-sm sm:px-6 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex flex-col gap-1 text-center lg:flex-row lg:gap-6 lg:text-left">
@@ -50,6 +53,8 @@ export function AppHeader({}: Props) {
                     <div className="flex items-center justify-center gap-2 lg:justify-end">
                         <span>Cart</span>
                         <Icon
+                            onClick={() => setCartOpen(!cartOpen)}
+                            className="cursor-pointer"
                             icon="mdi:cart-outline"
                             width={20}
                             height={20}
@@ -57,6 +62,33 @@ export function AppHeader({}: Props) {
                     </div>
                 </div>
             </div>
+            {cartOpen && (
+                <Card className="absolute top-full right-0 z-50 mt-2 w-64 p-4 shadow-xl">
+                    <h3 className="mb-2 border-b pb-2 font-bold">Your Cart</h3>
+                    {cart.length === 0 ? (
+                        <div>Empty</div>
+                    ) : (
+                        <>
+                            <div>
+                                {cart.map((item) => (
+                                    <div key={item.id}>
+                                        {item.name} - {item.quantity}
+                                        <Button
+                                            onClick={() =>
+                                                removeFromCart(item.id)
+                                            }
+                                        >
+                                            Delete
+                                        </Button>
+                                    </div>
+                                ))}
+                                <h1> Sum {getTotalPrice()}$</h1>
+                                <Button onClick={clearCart}>Clear</Button>
+                            </div>
+                        </>
+                    )}
+                </Card>
+            )}
         </header>
     );
 }

@@ -12,3 +12,7 @@ export interface Toy {
     image:string;
     description?:string;
 }
+
+export interface CartItem extends Toy {
+    quantity:number
+}
