@@ -8,6 +8,7 @@ import { useCartStore } from '@/stores/useCartStore';
 export function AppHeader() {
     const [cartOpen, setCartOpen] = useState(false);
     const { cart, removeFromCart, getTotalPrice, clearCart } = useCartStore();
+    const  totalItems = cart.reduce((total,items) => total + items.quantity, 0)
 
     return (
         <header className="relative">
@@ -59,11 +60,13 @@ export function AppHeader() {
                             width={20}
                             height={20}
                         ></Icon>
+                    <span> {totalItems}</span>
                     </div>
+
                 </div>
             </div>
             {cartOpen && (
-                <Card className="absolute top-full right-0 z-50 mt-2 w-64 p-4 shadow-xl">
+                <Card className="absolute top-full right-0 z-50 mt-2 mr-10 w-64 bg-white p-4 text-black shadow-xl">
                     <h3 className="mb-2 border-b pb-2 font-bold">Your Cart</h3>
                     {cart.length === 0 ? (
                         <div>Empty</div>
@@ -71,19 +74,33 @@ export function AppHeader() {
                         <>
                             <div>
                                 {cart.map((item) => (
-                                    <div key={item.id}>
-                                        {item.name} - {item.quantity}
+                                    <div
+                                        key={item.id}
+                                        className="space-y-2 py-3 pt-1"
+                                    >
+                                        <img
+                                            src={item.image}
+                                            alt={item.name}
+                                            className="h-12 my-3 mt-0 w-12 rounded-lg bg-gray-50 object-cover"
+                                        />
+                                        {item.name} - x{item.quantity}
                                         <Button
                                             onClick={() =>
                                                 removeFromCart(item.id)
                                             }
+                                            className="text-gray-400 transition hover:text-red-500"
                                         >
                                             Delete
                                         </Button>
                                     </div>
                                 ))}
-                                <h1> Sum {getTotalPrice()}$</h1>
-                                <Button onClick={clearCart}>Clear</Button>
+                                <h1> ьum {getTotalPrice()}$</h1>
+                                <Button
+                                    className="bg-gray-100 flex-1 rounded-xl text-gray-700 hover:bg-gray-200"
+                                    onClick={clearCart}
+                                >
+                                    Clear
+                                </Button>
                             </div>
                         </>
                     )}
