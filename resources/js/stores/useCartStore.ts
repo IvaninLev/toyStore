@@ -32,9 +32,16 @@ export const useCartStore = create<CartState>()(
                 }
             },
             removeFromCart: (productId: number) => {
-                set({
-                    cart: get().cart.filter((item) => item.id !== productId),
-                });
+                const currentCart = get().cart;
+
+                const updatedCart = currentCart
+                    .map((item) =>
+                        item.id === productId
+                            ? { ...item, quantity: item.quantity - 1 }
+                            : item,
+                    )
+                    .filter((item) => item.quantity > 0);
+                set({ cart: updatedCart });
             },
             clearCart: () => set({ cart: [] }),
             getTotalPrice: () => {
