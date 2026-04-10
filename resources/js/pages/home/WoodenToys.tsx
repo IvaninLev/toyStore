@@ -37,7 +37,7 @@ export default function WoodenToys({ products = [] }: { products: Toy[] }) {
                             <CardTitle className="text-center">
                                 {product.name}
                             </CardTitle>
-                            <Button onClick={()=>addToCart(product)} className="h-12 w-auto rounded-3xl bg-[#A5C926] px-10 text-white">
+                            <Button onClick={()=>addToCart(product)} className="cursor-pointer h-12 w-auto rounded-3xl bg-[#A5C926] px-10 text-white">
                                 ${product.price}
                             </Button>
                         </Card>
