@@ -1,11 +1,14 @@
+import { Button } from '@headlessui/react';
 import 'overlayscrollbars/overlayscrollbars.css';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 import React from 'react';
 import { Card, CardTitle } from '@/components/ui/card';
+import { useCartStore } from '@/stores/useCartStore';
 import type { Toy } from '@/types';
-import { Button } from '@headlessui/react';
 
 export default function WoodenToys({ products = [] }: { products: Toy[] }) {
+    const addToCart = useCartStore((state) => state.addToCart);
+
     return (
         <section className="container bg-[#F8F8F8] text-black">
             <h1 className="ml-[12.5%] pt-10 text-3xl">Wooden Toys</h1>
@@ -16,11 +19,9 @@ export default function WoodenToys({ products = [] }: { products: Toy[] }) {
                     scrollbars: {
                         autoHide: 'never',
                         clickScroll: true,
-
                     },
                 }}
-                className=" wooden-scrollbars flex space-x-8 overflow-x-auto my-4 sm:ml-[10%] lg:ml-[12%]"
-
+                className="wooden-scrollbars my-4 flex space-x-8 overflow-x-auto sm:ml-[10%] lg:ml-[12%]"
             >
                 <div className="flex space-x-8 pb-8">
                     {products.map((product) => (
@@ -33,11 +34,11 @@ export default function WoodenToys({ products = [] }: { products: Toy[] }) {
                                 className="h-46.25 w-46.25 object-contain"
                                 alt={product.name}
                             />
-                            <CardTitle className=" text-center">
+                            <CardTitle className="text-center">
                                 {product.name}
                             </CardTitle>
-                            <Button className="h-12 w-auto px-10 rounded-3xl bg-[#A5C926] text-white  ">
-                              ${product.price}
+                            <Button onClick={()=>addToCart(product)} className="h-12 w-auto rounded-3xl bg-[#A5C926] px-10 text-white">
+                                ${product.price}
                             </Button>
                         </Card>
                     ))}

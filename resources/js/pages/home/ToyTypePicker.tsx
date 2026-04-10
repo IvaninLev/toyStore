@@ -16,6 +16,7 @@ export default function ToyTypePicker() {
                      lg:text-left">
                     <img
                         src={bear}
+                        alt="bear"
                         className="relative w-35 max-w-[45vw] sm:w-45 lg:absolute lg:left-8 lg:top-1/2 lg:w-55
                         lg:-translate-y-1/2"
                     ></img>
@@ -36,6 +37,7 @@ export default function ToyTypePicker() {
                      sm:px-10 lg:items-start lg:pl-12 lg:pr-32 lg:text-left">
                     <img
                         src={wooden}
+                        alt="wooden"
                         className="relative w-35 max-w-[45vw] sm:w-45 lg:absolute lg:right-8 lg:top-1/2 lg:w-55
                          lg:-translate-y-1/2"
                     ></img>
