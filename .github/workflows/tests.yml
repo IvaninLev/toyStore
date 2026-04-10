@@ -19,7 +19,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: ['^8.4']
+        php-version: [ '8.4' ]
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: testing
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3306:3306
 
     steps:
       - name: Checkout code
@@ -31,6 +45,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           tools: composer:v2
           coverage: xdebug
+
 
       - name: Setup Node
         uses: actions/setup-node@v6
