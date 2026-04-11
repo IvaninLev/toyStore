@@ -1,11 +1,19 @@
 <?php
 
 use App\Http\Controllers\ToysController;
-use App\Http\Resources\ToysResource;
-use App\Models\Toys;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [ToysController::class, 'index'])->name('home');
 
-require __DIR__.'/settings.php';
+Route::get('/payment/success', function () {
+    return Inertia::render('payment/Success');
+})->name('success');
+
+Route::get('/payment/cancel', function () {
+    return Inertia::render('payment/Cancel');
+})->name('cancel');
+
+Route::post('/checkout', [\App\Http\Controllers\Payments\PaymentController::class, 'checkout'])->name('checkout');
+
+require __DIR__ . '/settings.php';

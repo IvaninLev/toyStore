@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import { Link } from '@inertiajs/react';
+import axios from 'axios';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -8,7 +9,21 @@ import { useCartStore } from '@/stores/useCartStore';
 export function AppHeader() {
     const [cartOpen, setCartOpen] = useState(false);
     const { cart, removeFromCart, getTotalPrice, clearCart } = useCartStore();
-    const  totalItems = cart.reduce((total,items) => total + items.quantity, 0)
+    const totalItems = cart.reduce((total, items) => total + items.quantity, 0);
+
+    const handleCheckOut = async () => {
+        const cart = useCartStore.getState().cart;
+
+        try {
+            const response = await axios.post('/checkout', { cart });
+
+            if (response.data.url) {
+                window.location.href = response.data.url;
+            }
+        } catch (error) {
+            console.error('ошибка при переходе к оплате', error);
+        }
+    };
 
     return (
         <header className="relative">
@@ -60,9 +75,8 @@ export function AppHeader() {
                             width={20}
                             height={20}
                         ></Icon>
-                    <span> {totalItems}</span>
+                        <span> {totalItems}</span>
                     </div>
-
                 </div>
             </div>
             {cartOpen && (
@@ -81,7 +95,7 @@ export function AppHeader() {
                                         <img
                                             src={item.image}
                                             alt={item.name}
-                                            className="h-12 my-3 mt-0 w-12 rounded-lg bg-gray-50 object-cover"
+                                            className="my-3 mt-0 h-12 w-12 rounded-lg bg-gray-50 object-cover"
                                         />
                                         {item.name} - x{item.quantity}
                                         <Button
@@ -94,12 +108,18 @@ export function AppHeader() {
                                         </Button>
                                     </div>
                                 ))}
-                                <h1> ьum {getTotalPrice()}$</h1>
+                                <h1> sum {getTotalPrice()}$</h1>
                                 <Button
-                                    className="bg-gray-100 flex-1 rounded-xl text-gray-700 hover:bg-gray-200"
+                                    className="flex-1 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200"
                                     onClick={clearCart}
                                 >
                                     Clear
+                                </Button>
+                                <Button
+                                    className="ml-10 flex-1 rounded-xl bg-green-500 py-3 text-white hover:bg-green-500"
+                                    onClick={handleCheckOut}
+                                >
+                                    Pay
                                 </Button>
                             </div>
                         </>
