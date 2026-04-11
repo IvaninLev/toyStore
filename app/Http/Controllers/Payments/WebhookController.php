@@ -3,13 +3,39 @@
 namespace App\Http\Controllers\Payments;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderProcessedMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Webhook;
 
 class WebhookController extends Controller
 {
+    private function buildMailData(object $session): array
+    {
+        $shippingDetails = $this->resolveShippingDetails($session);
+        $address = $shippingDetails->address
+            ?? $session->customer_details->address
+            ?? null;
+
+        return [
+            'session_id' => $session->id,
+            'email' => $this->resolveEmail($session),
+            'amount_total' => $session->amount_total ?? 0,
+            'currency' => $session->currency ?? 'usd',
+            'customer_name' => $shippingDetails->name
+                ?? $session->customer_details->name
+                ?? 'no name provided',
+            'address_line1' => $address->line1 ?? 'no address line 1',
+            'address_line2' => $address->line2 ?? null,
+            'postal_code' => $address->postal_code ?? 'no postal code provided',
+            'city' => $address->city ?? 'no city provided',
+            'state' => $address->state ?? null,
+            'country' => $address->country ?? null,
+        ];
+    }
+
     public function handle(Request $request)
     {
         $payload = $request->getContent();
@@ -26,14 +52,34 @@ class WebhookController extends Controller
             return response()->json(['error' => 'Invalid payload'], 400);
         }
 
-        if ($event->type === 'checkout.session.completed') {
-            $session = $event->data->object;
-
-            Log::info('---PAYMENT SUCCESS---');
-            Log::info('Id сессии: ' . $session->id);
-            Log::info('Email клиента: ' . ($session->customer_details->email ?? 'не указан'));
+        if ($event->type !== 'checkout.session.completed') {
+            return response()->json(['status' => 'ignored'], 200);
         }
 
+        $session = $event->data->object;
+        $mailData = $this->buildMailData($session);
+
+        if (!$mailData['email']) {
+            Log::warning('Stripe Webhook: no email for session', ['session' => $session->id]);
+            return response()->json(['status' => 'skipped'], 200);
+        }
+
+        Mail::to($mailData['email'])->send(new OrderProcessedMail($mailData));
+
         return response()->json(['status' => 'success'], 200);
+    }
+
+    private function resolveEmail(object $session): ?string
+    {
+        return $session->customer_details->email
+            ?? $session->customer_email
+            ?? null;
+    }
+
+    private function resolveShippingDetails(object $session): ?object
+    {
+        return $session->shipping_details
+            ?? $session->collected_information->shipping_details
+            ?? null;
     }
 }

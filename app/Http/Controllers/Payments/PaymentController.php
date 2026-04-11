@@ -30,6 +30,10 @@ class PaymentController
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
             'mode' => 'payment',
+            'billing_address_collection' => 'required',
+            'shipping_address_collection' => [
+                'allowed_countries' => ['US', 'CZ', 'UA'],
+            ],
             'success_url' => route('success'),
             'cancel_url' => route('cancel'),
         ]);
