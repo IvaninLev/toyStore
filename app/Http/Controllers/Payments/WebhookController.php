@@ -15,24 +15,21 @@ class WebhookController extends Controller
     private function buildMailData(object $session): array
     {
         $shippingDetails = $this->resolveShippingDetails($session);
-        $address = $shippingDetails->address
-            ?? $session->customer_details->address
-            ?? null;
+        $address = $shippingDetails?->address
+            ?? $session->customer_details?->address;
 
         return [
             'session_id' => $session->id,
             'email' => $this->resolveEmail($session),
             'amount_total' => $session->amount_total ?? 0,
             'currency' => $session->currency ?? 'usd',
-            'customer_name' => $shippingDetails->name
-                ?? $session->customer_details->name
-                ?? 'no name provided',
-            'address_line1' => $address->line1 ?? 'no address line 1',
-            'address_line2' => $address->line2 ?? null,
-            'postal_code' => $address->postal_code ?? 'no postal code provided',
-            'city' => $address->city ?? 'no city provided',
-            'state' => $address->state ?? null,
-            'country' => $address->country ?? null,
+            'customer_name' => $shippingDetails->name ?? $session->customer_details?->name,
+            'address_line1' => $address?->line1 ?? 'no adress',
+            'address_line2' => $address?->line2,
+            'postal_code' => $address?->postal_code,
+            'city' => $address?->city,
+            'state' => $address?->state,
+            'country' => $address?->country,
         ];
     }
 
@@ -74,6 +71,7 @@ class WebhookController extends Controller
         return $session->customer_details->email
             ?? $session->customer_email
             ?? null;
+
     }
 
     private function resolveShippingDetails(object $session): ?object
