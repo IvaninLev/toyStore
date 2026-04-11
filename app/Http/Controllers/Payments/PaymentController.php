@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Http\Controllers\Payments;
+
+use Illuminate\Http\Request;
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
+
+class PaymentController
+{
+    public function checkOut(Request $request)
+    {
+        Stripe::setApiKey(config('services.stripe.secret'));
+        $cartItems = $request->input('cart');
+        $lineItems = [];
+
+        foreach ($cartItems as $item) {
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => 'usd',
+                    'product_data' => [
+                        'name' => $item['name'],
+                    ],
+                    'unit_amount' => $item['price'] * 100,
+                ],
+                'quantity' => $item['quantity'],
+            ];
+        }
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => route('success'),
+            'cancel_url' => route('cancel'),
+        ]);
+        return response()->json(['url' => $session->url]);
+    }
+}
