@@ -1,3 +1,4 @@
+import { Toaster } from 'sonner';
 import AppLayoutTemplate from '@/layouts/app/app-header-layout';
 import type { BreadcrumbItem } from '@/types';
 
@@ -10,6 +11,7 @@ export default function AppLayout({
 }) {
     return (
         <AppLayoutTemplate breadcrumbs={breadcrumbs}>
+            <Toaster/>
             {children}
         </AppLayoutTemplate>
     );
