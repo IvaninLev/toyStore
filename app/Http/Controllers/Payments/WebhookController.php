@@ -34,6 +34,21 @@ class WebhookController extends Controller
         ];
     }
 
+    private function resolveEmail(object $session): ?string
+    {
+        return $session->customer_details->email
+            ?? $session->customer_email
+            ?? null;
+
+    }
+
+    private function resolveShippingDetails(object $session): ?object
+    {
+        return $session->shipping_details
+            ?? $session->collected_information->shipping_details
+            ?? null;
+    }
+
     public function handle(Request $request)
     {
         $payload = $request->getContent();
@@ -67,18 +82,4 @@ class WebhookController extends Controller
         return response()->json(['status' => 'success'], 200);
     }
 
-    private function resolveEmail(object $session): ?string
-    {
-        return $session->customer_details->email
-            ?? $session->customer_email
-            ?? null;
-
-    }
-
-    private function resolveShippingDetails(object $session): ?object
-    {
-        return $session->shipping_details
-            ?? $session->collected_information->shipping_details
-            ?? null;
-    }
 }

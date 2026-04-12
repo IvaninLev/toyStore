@@ -11,14 +11,16 @@ export function AppHeader() {
     const { cart, removeFromCart, getTotalPrice, clearCart } = useCartStore();
     const totalItems = cart.reduce((total, items) => total + items.quantity, 0);
 
+    const handleRickRoll = () =>{
+        console.log('rickrolled!')
+    }
+
     const handleCheckOut = async () => {
-        const cart = useCartStore.getState().cart;
-
         try {
-            const response = await axios.post('/checkout', { cart });
+            const { data } = await axios.post('/checkout', { cart });
 
-            if (response.data.url) {
-                window.location.href = response.data.url;
+            if (data.url) {
+                window.location.href = data.url;
             }
         } catch (error) {
             console.error('ошибка при переходе к оплате', error);
@@ -37,7 +39,20 @@ export function AppHeader() {
                         <Icon icon="mdi:twitter" width={20} height={20} />
                         <Icon icon="mdi:facebook" width={20} height={20} />
                         <Icon icon="mdi:pinterest" width={20} height={20} />
-                        <Icon icon="mdi:youtube" width={20} height={20} />
+                        <a
+                            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1"
+                            target="_blank"
+                            rel="noreferrer"
+                            title="secret"
+                        >
+                            <Icon
+                                className="cursor-pointer transition-colors hover:text-red-200"
+                                onClick={handleRickRoll}
+                                icon="mdi:youtube"
+                                width={20}
+                                height={20}
+                            />
+                        </a>
                     </div>
                 </div>
             </div>
