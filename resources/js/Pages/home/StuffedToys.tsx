@@ -26,7 +26,7 @@ export default function StuffedToys() {
         },
     });
     const uniqueItems = Array.from(
-        new Map(list.items.map(item => [item.id, item])).values(),
+        new Map(list.items.map((item) => [item.id, item])).values(),
     );
 
     const { ref: sentinelRef, inView } = useInView({
@@ -89,7 +89,7 @@ export default function StuffedToys() {
                     ))}
                     <div
                         ref={sentinelRef}
-                        className="flex w-20 flex-none items-center justify-center "
+                        className="flex w-20 flex-none items-center justify-center"
                     ></div>
                 </div>
             </OverlayScrollbarsComponent>

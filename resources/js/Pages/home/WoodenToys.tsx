@@ -11,13 +11,11 @@ import type { Toy } from '@/types';
 
 export default function WoodenToys() {
     const addToCart = useCartStore((state) => state.addToCart);
-
     const isLoadingRef = useRef(false);
 
     const list = useAsyncList<Toy>({
         async load({ cursor }) {
             const url = cursor || '/api/toys/wooden';
-
             const res = await axios.get(url);
 
             return {
@@ -26,14 +24,15 @@ export default function WoodenToys() {
             };
         },
     });
-    const { ref: sentinelRef, inView } = useInView({
-        threshold: 0.1,
-        rootMargin: '0px',
-    });
 
-    const uniqueItems: Toy[] = Array.from(
+    const uniqueItems = Array.from(
         new Map(list.items.map((item) => [item.id, item])).values(),
     );
+
+    const { ref: sentinelRef, inView } = useInView({
+        threshold: 1,
+        rootMargin: '0px',
+    });
 
     useEffect(() => {
         if (inView && !list.isLoading && list.items.length > 0) {
@@ -44,7 +43,7 @@ export default function WoodenToys() {
             isLoadingRef.current = true;
             list.loadMore();
         }
-    }, [inView, list.items, list.items.length]);
+    }, [inView, list.isLoading, list.items.length]);
 
     useEffect(() => {
         if (!list.isLoading) {
@@ -88,7 +87,10 @@ export default function WoodenToys() {
                             </Button>
                         </Card>
                     ))}
-                    <div ref={sentinelRef} className="flex w-20 flex-none justify-center items-center"></div>
+                    <div
+                        ref={sentinelRef}
+                        className="flex w-20 flex-none items-center justify-center"
+                    ></div>
                 </div>
             </OverlayScrollbarsComponent>
         </section>

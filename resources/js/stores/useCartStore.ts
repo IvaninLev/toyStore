@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { persist } from 'zustand/middleware';
 import { create } from 'zustand/react';
 import type { CartItem, Toy } from '@/types';
@@ -30,6 +31,10 @@ export const useCartStore = create<CartState>()(
                         cart: [...cart, { ...product, quantity: 1 }],
                     });
                 }
+
+                toast.success(`"${product.name}" Added to cart!`, {
+                    description: 'Good choice!',
+                });
             },
             removeFromCart: (productId: number) => {
                 const currentCart = get().cart;
