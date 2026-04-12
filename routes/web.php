@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Payments\PaymentController;
 use App\Http\Controllers\ToysController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,6 +15,6 @@ Route::get('/payment/cancel', function () {
     return Inertia::render('payment/Cancel');
 })->name('cancel');
 
-Route::post('/checkout', [\App\Http\Controllers\Payments\PaymentController::class, 'checkout'])->name('checkout');
+Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
 
 require __DIR__ . '/settings.php';

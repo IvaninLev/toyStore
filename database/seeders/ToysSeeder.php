@@ -9,6 +9,6 @@ class ToysSeeder extends Seeder
 {
     public function run(): void
     {
-        Toys::factory()->count(10)->create();
+        Toys::factory()->count(500)->create();
     }
 }

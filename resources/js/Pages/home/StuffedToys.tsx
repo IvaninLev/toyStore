@@ -1,13 +1,55 @@
 import { Button } from '@headlessui/react';
 import 'overlayscrollbars/overlayscrollbars.css';
+import axios from 'axios';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
-import React from 'react';
+import { useEffect, useRef } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useAsyncList } from 'react-stately';
 import { Card, CardTitle } from '@/components/ui/card';
 import { useCartStore } from '@/stores/useCartStore';
 import type { Toy } from '@/types';
 
-export default function WoodenToys({ products = [] }: { products: Toy[] }) {
+export default function StuffedToys() {
     const addToCart = useCartStore((state) => state.addToCart);
+    const isLoadingRef = useRef(false);
+
+    const list = useAsyncList<Toy>({
+        async load({ cursor }) {
+            const url = cursor || '/api/toys/stuffed';
+
+            const res = await axios.get(url);
+
+            return {
+                items: res.data.data,
+                cursor: res.data.next_page_url,
+            };
+        },
+    });
+    const uniqueItems = Array.from(
+        new Map(list.items.map(item => [item.id, item])).values(),
+    );
+
+    const { ref: sentinelRef, inView } = useInView({
+        threshold: 1,
+        rootMargin: '0px',
+    });
+
+    useEffect(() => {
+        if (inView && !list.isLoading && list.items.length > 0) {
+            if (isLoadingRef.current) {
+                return;
+            }
+
+            isLoadingRef.current = true;
+            list.loadMore();
+        }
+    }, [inView, list.isLoading, list.items.length]);
+
+    useEffect(() => {
+        if (!list.isLoading) {
+            isLoadingRef.current = false;
+        }
+    }, [list.isLoading]);
 
     return (
         <section className="container bg-[#F8F8F8] text-black">
@@ -21,10 +63,10 @@ export default function WoodenToys({ products = [] }: { products: Toy[] }) {
                         clickScroll: true,
                     },
                 }}
-                className="wooden-scrollbars flex space-x-8 overflow-x-auto py-2 sm:ml-[10%] lg:ml-[12%]"
+                className="wooden-scrollbars my-4 flex space-x-8 overflow-x-auto sm:ml-[10%] lg:ml-[12%]"
             >
                 <div className="flex space-x-8 pb-8">
-                    {products.map((product) => (
+                    {uniqueItems.map((product) => (
                         <Card
                             key={product.id}
                             className="mt-16 mb-12 h-82 w-67.5 flex-none items-center border-0 bg-white text-black shadow-sm"
@@ -35,7 +77,7 @@ export default function WoodenToys({ products = [] }: { products: Toy[] }) {
                                 alt={product.name}
                             />
                             <CardTitle className="text-center">
-                                {product.name}, {product.type}
+                                {product.name}
                             </CardTitle>
                             <Button
                                 onClick={() => addToCart(product)}
@@ -45,6 +87,10 @@ export default function WoodenToys({ products = [] }: { products: Toy[] }) {
                             </Button>
                         </Card>
                     ))}
+                    <div
+                        ref={sentinelRef}
+                        className="flex w-20 flex-none items-center justify-center "
+                    ></div>
                 </div>
             </OverlayScrollbarsComponent>
         </section>
