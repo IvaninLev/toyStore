@@ -46,7 +46,6 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
-
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
@@ -67,9 +66,6 @@ jobs:
       - name: Build Assets
         run: npm run build
 
-      - name: Tests
-        run: ./vendor/bin/phpunit
-
       - name: Wait for MySQL
         run: |
           until mysqladmin ping -h"127.0.0.1" -P"3306" -u"root" -p"root" --silent; do
@@ -78,5 +74,5 @@ jobs:
           done
         timeout-minutes: 5
 
-      - name: Tests
+      - name: Run Tests
         run: ./vendor/bin/phpunit
