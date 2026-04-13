@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: ['8.3', '8.4' ]
+        php-version: [ '8.3', '8.4','8.5' ]
 
     services:
       mysql:
@@ -66,6 +66,17 @@ jobs:
 
       - name: Build Assets
         run: npm run build
+
+      - name: Tests
+        run: ./vendor/bin/phpunit
+
+      - name: Wait for MySQL
+        run: |
+          until mysqladmin ping -h"127.0.0.1" -P"3306" -u"root" -p"root" --silent; do
+            echo 'waiting for mysql...'
+            sleep 1
+          done
+        timeout-minutes: 5
 
       - name: Tests
         run: ./vendor/bin/phpunit
