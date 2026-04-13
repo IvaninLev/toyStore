@@ -63,26 +63,7 @@ jobs:
       - name: Generate Application Key
         run: php artisan key:generate
 
-      - name: Wait for MySQL
-        run: |
-          until mysqladmin ping -h"localhost" -P"3306" -u"root" -p"root" --silent; do
-            echo 'waiting for mysql...'
-            sleep 1
-          done
 
-      - name: Build Assets
-        run: npm run build
-
-      - name: Tests
-        run: ./vendor/bin/phpunit
-
-      - name: Wait for MySQL
-        run: |
-          until mysqladmin ping -h"127.0.0.1" -P"3306" -u"root" -p"root" --silent; do
-            echo 'waiting for mysql...'
-            sleep 1
-          done
-        timeout-minutes: 5
 
       - name: Run Tests
         run: ./vendor/bin/phpunit
