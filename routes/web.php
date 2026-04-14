@@ -15,6 +15,10 @@ Route::get('/payment/cancel', function () {
     return Inertia::render('payment/Cancel');
 })->name('cancel');
 
+Route::get('/catalog', function () {
+    return Inertia::render('catalog/Catalog');
+})->name('catalog');
+
 Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
 
 require __DIR__ . '/settings.php';

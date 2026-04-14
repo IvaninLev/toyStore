@@ -66,7 +66,7 @@ export function AppHeader() {
                             </h1>
                         </div>
                         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 lg:justify-start">
-                            <Link href="#" className="text-base sm:text-lg">
+                            <Link href="/catalog" className="text-base sm:text-lg">
                                 Catalog
                             </Link>
                             <Link href="#" className="text-base sm:text-lg">
