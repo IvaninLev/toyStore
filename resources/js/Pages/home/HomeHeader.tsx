@@ -1,18 +1,18 @@
-import { Button } from '@headlessui/react';
+import { Link } from '@inertiajs/react';
 import header from '@/../images/homeHeader.svg';
 import { Card, CardTitle } from '@/components/ui/card';
 
 export default function HomeHeader() {
     return (
         <div
-            className="flex min-h-[560px] w-full items-center justify-center px-4 py-12 sm:min-h-[650px] sm:px-6 lg:min-h-[750px]"
+            className="flex min-h-140 w-full items-center justify-center px-4 py-12 sm:min-h-162.5 sm:px-6 lg:min-h-187.5"
             style={{
                 backgroundImage: `url(${header})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
             }}
         >
-            <Card className="relative flex w-full max-w-[579px] flex-col items-center justify-center gap-5 border-0 bg-white px-6 py-10 text-center sm:px-10 sm:py-12">
+            <Card className="relative flex w-full max-w-144.75 flex-col items-center justify-center gap-5 border-0 bg-white px-6 py-10 text-center sm:px-10 sm:py-12">
                 <span className="text-sm text-green-600 sm:text-base">
                     Say Hello to ToyStore!
                 </span>
@@ -25,9 +25,12 @@ export default function HomeHeader() {
                         Free Ecommerce Template for Webflow
                     </span>
                 </CardTitle>
-                <Button className="h-12 w-full max-w-[153px] rounded-3xl bg-[#A5C926]">
+                <Link
+                    href="/catalog"
+                    className="h-12 w-full max-w-38.25 flex items-center justify-center rounded-3xl bg-[#A5C926]"
+                >
                     Open catalog
-                </Button>
+                </Link>
             </Card>
         </div>
     );

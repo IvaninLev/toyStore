@@ -6,6 +6,7 @@ use App\Enums\PaginationEnum;
 use App\Http\Requests\ToysRequest;
 use App\Http\Resources\ToysResource;
 use App\Models\Toys;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ToysController extends Controller
@@ -50,12 +51,20 @@ class ToysController extends Controller
         return response()->json();
     }
 
-    public function catalogIndex()
+    public function catalogIndex(Request $request)
     {
-        $toys = Toys::latest()->paginate(PaginationEnum::PAGE_SIZE->value);
+        $query = Toys::query();
+
+        if ($request->has('category')) {
+            $query->where('type', $request->category);
+        }
+
+        $toys = $query->latest()->paginate(PaginationEnum::PAGE_SIZE->value);
+
 
         return Inertia::render('catalog/Index', [
             'products' => $toys,
+            'filters' => $request->only(['category'])
         ]);
     }
 }

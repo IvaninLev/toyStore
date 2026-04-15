@@ -1,6 +1,6 @@
+import { Link } from '@inertiajs/react';
 import bear from '@/../images/StuffedBear.svg';
 import wooden from '@/../images/WoodenToy.svg';
-import { Button } from '@/components/ui/button';
 import { Card, CardTitle } from '@/components/ui/card';
 
 export default function ToyTypePicker() {
@@ -26,9 +26,9 @@ export default function ToyTypePicker() {
                     >
                         Stuffed Animals
                     </CardTitle>
-                    <Button className="h-12 w-30 rounded-3xl bg-white text-[13px] text-black hover:bg-white/90">
+                    <Link href="/catalog?category=stuffed" className="  flex justify-center items-center   h-12 w-30 rounded-3xl bg-white text-[13px] text-black hover:bg-white/90">
                         Shop now
-                    </Button>
+                    </Link>
                 </Card>
 
                 <Card
@@ -47,9 +47,9 @@ export default function ToyTypePicker() {
                     >
                         Wooden Toys
                     </CardTitle>
-                    <Button className="h-12 w-30 rounded-3xl bg-white text-[13px] text-black hover:bg-white/90">
+                    <Link href="/catalog?category=wooden" className=" flex justify-center items-center  h-12 w-30 rounded-3xl bg-white text-[13px] text-black hover:bg-white/90">
                         Shop now
-                    </Button>
+                    </Link>
                 </Card>
             </div>
         </section>

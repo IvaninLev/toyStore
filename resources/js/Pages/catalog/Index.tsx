@@ -7,7 +7,7 @@ interface paginatedProducts {
     lase_page: number;
 }
 
-export default function Index({ products }: {products: paginatedProducts}) {
+export default function Index({ products }: { products: paginatedProducts }) {
     return (
         <>
             <main>
