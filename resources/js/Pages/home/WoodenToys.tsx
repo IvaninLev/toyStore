@@ -30,7 +30,7 @@ export default function WoodenToys() {
     );
 
     const { ref: sentinelRef, inView } = useInView({
-        threshold: 1,
+        threshold: 0.1,
         rootMargin: '0px',
     });
 

@@ -32,7 +32,7 @@ export default function Catalog({ products = [] }: { products: Toy[] }) {
                                 </CardTitle>
                                 <Button
                                     onClick={() => addToCart(product)}
-                                    className="h-12 w-auto cursor-pointer rounded-3xl bg-[#A5C926] px-10 text-white"
+                                    className="h-12 w-auto cursor-pointer hover:bg-[#A5C926] rounded-3xl bg-[#A5C926] px-10 text-white"
                                 >
                                     ${product.price}
                                 </Button>
