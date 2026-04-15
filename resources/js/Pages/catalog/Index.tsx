@@ -1,10 +1,17 @@
+import type { Toy } from '@/types';
 import Catalog from './Catalog';
 
-export default function Index() {
+interface paginatedProducts {
+    data: Toy[];
+    current_page: number;
+    lase_page: number;
+}
+
+export default function Index({ products }: {products: paginatedProducts}) {
     return (
         <>
             <main>
-                <Catalog />
+                <Catalog products={products.data} />
             </main>
         </>
     );

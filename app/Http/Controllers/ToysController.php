@@ -49,4 +49,13 @@ class ToysController extends Controller
 
         return response()->json();
     }
+
+    public function catalogIndex()
+    {
+        $toys = Toys::latest()->paginate(PaginationEnum::PAGE_SIZE->value);
+
+        return Inertia::render('catalog/Index', [
+            'products' => $toys,
+        ]);
+    }
 }
