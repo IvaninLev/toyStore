@@ -61,12 +61,12 @@ export function AppHeader() {
                 <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-10">
                         <div>
-                            <h1 className="text-center text-2xl lg:text-left">
+                            <Link href="/" className="text-center text-2xl lg:text-left">
                                 Toy Store
-                            </h1>
+                            </Link>
                         </div>
                         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 lg:justify-start">
-                            <Link href="#" className="text-base sm:text-lg">
+                            <Link href="/catalog" className="text-base sm:text-lg">
                                 Catalog
                             </Link>
                             <Link href="#" className="text-base sm:text-lg">
