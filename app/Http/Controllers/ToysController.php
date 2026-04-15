@@ -61,10 +61,9 @@ class ToysController extends Controller
 
         $toys = $query->latest()->paginate(PaginationEnum::PAGE_SIZE->value);
 
-
         return Inertia::render('catalog/Index', [
             'products' => $toys,
-            'filters' => $request->only(['category'])
+            'filters' => $request->only(['category']),
         ]);
     }
 }
