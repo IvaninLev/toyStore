@@ -26,7 +26,7 @@ export default function ToyTypePicker() {
                     >
                         Stuffed Animals
                     </CardTitle>
-                    <Link href="/catalog?category=stuffed" className="  flex justify-center items-center   h-12 w-30 rounded-3xl bg-white text-[13px] text-black hover:bg-white/90">
+                    <Link href="/catalog?category=stuffed" className="   flex justify-center items-center   h-12 w-30 rounded-3xl bg-white text-[13px] text-black hover:bg-white/90">
                         Shop now
                     </Link>
                 </Card>
