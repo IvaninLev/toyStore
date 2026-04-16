@@ -7,12 +7,12 @@ import type { Toy } from '@/types';
 
 export default function Catalog({
     products = [],
-    currentPage,
     lastPage,
+    currentPage,
 }: {
     products: Toy[];
-    currentPage: number;
     lastPage: number;
+    currentPage: number;
 }) {
     const addToCart = useCartStore((state) => state.addToCart);
 
@@ -57,22 +57,27 @@ export default function Catalog({
                     ))}
                 </div>
                 <div className="d-flex flex w-auto items-center justify-center space-x-3">
-                    <span>{currentPage}</span>
-                    {currentPage > 1 && (
+                    {currentPage !== 1 && (
                         <Button
-                            className="cursor-pointer rounded-3xl bg-[#A5C926] text-white hover:bg-[#A5C926]"
+                            className="bg-green-500 text-white hover:bg-green-500"
                             onClick={() => handlePageChange(currentPage - 1)}
                         >
                             prev
                         </Button>
                     )}
-                    {lastPage}
-                    <Button
-                        className="cursor-pointer rounded-3xl bg-[#A5C926] text-white hover:bg-[#A5C926]"
-                        onClick={() => handlePageChange(currentPage + 1)}
-                    >
-                        next
-                    </Button>
+                    <div>
+                        <span> {currentPage} </span>
+                        <span> of </span>
+                        <span> {lastPage} </span>
+                    </div>
+                    {currentPage < lastPage && (
+                        <Button
+                            className="bg-green-500 text-white hover:bg-green-500"
+                            onClick={() => handlePageChange(currentPage + 1)}
+                        >
+                            next
+                        </Button>
+                    )}
                 </div>
             </main>
         </section>
