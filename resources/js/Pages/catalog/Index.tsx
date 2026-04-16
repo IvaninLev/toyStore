@@ -13,8 +13,8 @@ export default function Index({ products }: { products: paginatedProducts }) {
             <main>
                 <Catalog
                     products={products.data}
-                    currentPage={products.current_page}
                     lastPage={products.last_page}
+                    currentPage={products.current_page}
                 />
             </main>
         </>
