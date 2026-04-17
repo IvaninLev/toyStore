@@ -40,14 +40,15 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=V  arela+Round&display=swap" rel="stylesheet">
 
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/app.tsx', "resources/js/Pages/{$page['component']}.tsx"])
 
     <x-inertia::head>
-        <title>Laravel + React</title>
+        <title>Toy Store</title>
     </x-inertia::head>
+    <title></title>
 </head>
 <body class="font-varela antialiased">
 <x-inertia::app />

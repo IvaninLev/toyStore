@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useAsyncList } from 'react-stately';
 import { Card, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useCartStore } from '@/stores/useCartStore';
 import type { Toy } from '@/types';
 
@@ -30,7 +31,7 @@ export default function StuffedToys() {
     );
 
     const { ref: sentinelRef, inView } = useInView({
-        threshold: 0.1  ,
+        threshold: 0.1,
         rootMargin: '0px',
     });
 
@@ -43,7 +44,7 @@ export default function StuffedToys() {
             isLoadingRef.current = true;
             list.loadMore();
         }
-    }, [inView, list.isLoading, list.items.length]);
+    }, [inView, list, list.isLoading, list.items.length]);
 
     useEffect(() => {
         if (!list.isLoading) {
@@ -52,7 +53,7 @@ export default function StuffedToys() {
     }, [list.isLoading]);
 
     return (
-        <section className="container bg-[#F8F8F8] text-black">
+        <section className="container bg-[#F8F8F8] pb-3 text-black">
             <h1 className="ml-[12.5%] pt-10 text-3xl">Stuffed Toys</h1>
 
             <OverlayScrollbarsComponent
@@ -87,6 +88,22 @@ export default function StuffedToys() {
                             </Button>
                         </Card>
                     ))}
+                    {list.isLoading && (
+                        <>
+                            {[...Array(3)].map((_, i) => (
+                                <Card
+                                    key={`skeleton-${i}`}
+                                    className="mt-16 mb-12 h-82 w-67.5 flex-none animate-pulse border-0 bg-white shadow-sm"
+                                >
+                                    <div className="flex flex-col items-center space-y-4 p-6">
+                                        <Skeleton className="h-46 w-46 rounded-xl bg-gray-200" />
+                                        <Skeleton className="h-6 w-3/4 bg-gray-200" />
+                                        <Skeleton className="h-10 w-32 rounded-3xl bg-gray-200" />
+                                    </div>
+                                </Card>
+                            ))}
+                        </>
+                    )}
                     <div
                         ref={sentinelRef}
                         className="flex w-20 flex-none items-center justify-center"
