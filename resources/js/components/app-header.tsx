@@ -11,9 +11,10 @@ export function AppHeader() {
     const { cart, removeFromCart, getTotalPrice, clearCart } = useCartStore();
     const totalItems = cart.reduce((total, items) => total + items.quantity, 0);
 
-    const handleRickRoll = () =>{
-        console.log('rickrolled!')
-    }
+
+    const handleRickRoll = () => {
+        console.log('rickrolled!');
+    };
 
     const handleCheckOut = async () => {
         try {
@@ -28,7 +29,7 @@ export function AppHeader() {
     };
 
     return (
-        <header className="relative">
+        <header className="sticky top-0 z-50">
             <div className="bg-green-500 text-white">
                 <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 text-sm sm:px-6 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex flex-col gap-1 text-center lg:flex-row lg:gap-6 lg:text-left">
@@ -61,12 +62,18 @@ export function AppHeader() {
                 <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-10">
                         <div>
-                            <h1 className="text-center text-2xl lg:text-left">
+                            <Link
+                                href="/"
+                                className="text-center text-2xl lg:text-left"
+                            >
                                 Toy Store
-                            </h1>
+                            </Link>
                         </div>
                         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 lg:justify-start">
-                            <Link href="#" className="text-base sm:text-lg">
+                            <Link
+                                href="/catalog"
+                                className="text-base sm:text-lg"
+                            >
                                 Catalog
                             </Link>
                             <Link href="#" className="text-base sm:text-lg">

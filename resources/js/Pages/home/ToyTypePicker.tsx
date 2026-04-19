@@ -26,7 +26,7 @@ export default function ToyTypePicker() {
                     >
                         Stuffed Animals
                     </CardTitle>
-                    <Button className="h-12 w-30 rounded-3xl bg-white text-[13px] text-black hover:bg-white/90">
+                    <Button className="h-12 w-30 rounded-3xl bg-white txt-[13px] text-black hover:bg-white/90">
                         Shop now
                     </Button>
                 </Card>
