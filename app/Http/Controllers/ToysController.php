@@ -53,17 +53,26 @@ class ToysController extends Controller
 
     public function catalogIndex(Request $request)
     {
-        $query = Toys::query();
-
-        if ($request->has('category')) {
-            $query->where('type', $request->category);
-        }
-
-        $toys = $query->latest()->paginate(PaginationEnum::PAGE_SIZE->value);
+        $toys = Toys::query()
+            ->when($request->category, function ($query, $category) {
+                $query->where('type', $category);
+            })
+            ->when($request->filled('min'), function ($query) use ($request) {
+                $query->where('price', '>=', (int) $request->min);
+            })
+            ->when($request->filled('max'), function ($query) use ($request) {
+                $query->where('price', '<=', (int) $request->max);
+            })
+            ->latest()
+            ->paginate(PaginationEnum::PAGE_SIZE->value)
+            ->withQueryString();
 
         return Inertia::render('catalog/Index', [
             'products' => $toys,
-            'filters' => $request->only(['category']),
+            'filters' => $request->only(['category', 'min', 'max']),
+            'maxPriceInDb' => \Cache::remember('toys_max_price', now()->addHour(), function () {
+                return Toys::max('price') ?? 1000;
+            }),
         ]);
     }
 }
