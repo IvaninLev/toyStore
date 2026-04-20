@@ -1,7 +1,7 @@
 import { router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle } from '@/components/ui/card';
-import CatalogSidebar from '@/Pages/catalog/CatalogSidebar';
+import { CatalogSidebar } from '@/Pages/catalog/CatalogSidebar';
 import { useCartStore } from '@/stores/useCartStore';
 import type { Toy } from '@/types';
 
@@ -9,10 +9,12 @@ export default function Catalog({
     products = [],
     lastPage,
     currentPage,
+    maxPriceInDb,
 }: {
     products: Toy[];
     lastPage: number;
     currentPage: number;
+    maxPriceInDb: number;
 }) {
     const addToCart = useCartStore((state) => state.addToCart);
 
@@ -30,7 +32,7 @@ export default function Catalog({
 
     return (
         <section className="flex text-black">
-            <CatalogSidebar />
+            <CatalogSidebar maxPriceInDb={maxPriceInDb} />
 
             <main className="">
                 <div className="grid pb-0 sm:grid-cols-1 sm:space-x-2 md:grid-cols-2 lg:grid-cols-4 lg:space-x-4">
