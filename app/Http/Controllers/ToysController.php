@@ -68,7 +68,7 @@ class ToysController extends Controller
             ->withQueryString();
 
         return Inertia::render('catalog/Index', [
-            'products' => Inertia::defer($toys),
+            'products' => $toys,
             'filters' => $request->only(['category', 'min', 'max']),
             'maxPriceInDb' => \Cache::remember('toys_max_price', now()->addHour(), function () {
                 return Toys::max('price') ?? 1000;
