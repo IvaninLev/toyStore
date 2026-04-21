@@ -14,11 +14,11 @@ class ToysController extends Controller
     public function index()
     {
         $stuffed = ToysResource::collection(
-            Toys::where('type', 'stuffed')->latest()->paginate(PaginationEnum::PAGE_SIZE->value)
+            Toys::where('type', 'stuffed')->latest()->cursorPaginate(PaginationEnum::PAGE_SIZE->value)
         );
 
         $wooden = ToysResource::collection(
-            Toys::where('type', 'wooden')->latest()->paginate(PaginationEnum::PAGE_SIZE->value)
+            Toys::where('type', 'wooden')->latest()->cursorPaginate(PaginationEnum::PAGE_SIZE->value)
         );
 
         return Inertia::render('home/Index', [

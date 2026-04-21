@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import header from '@/../images/homeHeader.svg';
+import header from '@/../images/homeHeader.webp';
 import { Card, CardTitle } from '@/components/ui/card';
 
 export default function HomeHeader() {

@@ -20,8 +20,6 @@ class ToysResource extends JsonResource
             'image' => $this->image,
             'type' => $this->type,
             'price' => $this->price,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }

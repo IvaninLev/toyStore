@@ -61,7 +61,7 @@ export default function Catalog({
                 <div className="d-flex flex w-auto items-center justify-center space-x-3">
                     {currentPage !== 1 && (
                         <Button
-                            className="bg-green-500 text-white hover:bg-green-500"
+                            className="hover:cursor-pointer bg-green-500 text-white hover:bg-green-500"
                             onClick={() => handlePageChange(currentPage - 1)}
                         >
                             prev
@@ -74,7 +74,7 @@ export default function Catalog({
                     </div>
                     {currentPage < lastPage && (
                         <Button
-                            className="bg-green-500 text-white hover:bg-green-500"
+                            className="hover:cursor-pointer bg-green-500 text-white hover:bg-green-500"
                             onClick={() => handlePageChange(currentPage + 1)}
                         >
                             next

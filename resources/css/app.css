@@ -2,7 +2,6 @@
 
 
 
-@import 'tw-animate-css';
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -72,7 +71,7 @@
     --color-sidebar-ring: var(--sidebar-ring);
 }
 
-:root {
+ :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -149,7 +148,6 @@
     }
 
     body {
-        /* Теперь это сработает, потому что мы определили --font-varela выше */
         @apply bg-background text-foreground font-varela;
     }
 }

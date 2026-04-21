@@ -47,6 +47,7 @@ export default function ToysScroller({
                             className="mt-16 mb-12 h-82 w-67.5 flex-none items-center border-0 bg-white text-black shadow-sm"
                         >
                             <img
+                                loading="lazy"
                                 src={product.image}
                                 className="h-46.25 w-46.25 object-contain"
                                 alt={product.name}
