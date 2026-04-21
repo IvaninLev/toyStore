@@ -1,32 +1,12 @@
 import { Icon } from '@iconify/react';
 import { Link } from '@inertiajs/react';
-import axios from 'axios';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { CartDropdown } from '@/components/cartDropdown';
 import { useCartStore } from '@/stores/useCartStore';
-
 export function AppHeader() {
     const [cartOpen, setCartOpen] = useState(false);
-    const { cart, removeFromCart, getTotalPrice, clearCart } = useCartStore();
+    const { cart } = useCartStore();
     const totalItems = cart.reduce((total, items) => total + items.quantity, 0);
-
-
-    const handleRickRoll = () => {
-        console.log('rickrolled!');
-    };
-
-    const handleCheckOut = async () => {
-        try {
-            const { data } = await axios.post('/checkout', { cart });
-
-            if (data.url) {
-                window.location.href = data.url;
-            }
-        } catch (error) {
-            console.error('ошибка при переходе к оплате', error);
-        }
-    };
 
     return (
         <header className="sticky top-0 z-50">
@@ -48,7 +28,6 @@ export function AppHeader() {
                         >
                             <Icon
                                 className="cursor-pointer transition-colors hover:text-red-200"
-                                onClick={handleRickRoll}
                                 icon="mdi:youtube"
                                 width={20}
                                 height={20}
@@ -61,10 +40,10 @@ export function AppHeader() {
             <div className="border-b bg-white text-black">
                 <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-10">
-                        <div>
+                        <div className="">
                             <Link
                                 href="/"
-                                className="text-center text-2xl lg:text-left"
+                                className="block text-center text-2xl md:text-center lg:text-left"
                             >
                                 Toy Store
                             </Link>
@@ -101,53 +80,7 @@ export function AppHeader() {
                     </div>
                 </div>
             </div>
-            {cartOpen && (
-                <Card className="absolute top-full right-0 z-50 mt-2 mr-10 w-64 bg-white p-4 text-black shadow-xl">
-                    <h3 className="mb-2 border-b pb-2 font-bold">Your Cart</h3>
-                    {cart.length === 0 ? (
-                        <div>Empty</div>
-                    ) : (
-                        <>
-                            <div>
-                                {cart.map((item) => (
-                                    <div
-                                        key={item.id}
-                                        className="space-y-2 py-3 pt-1"
-                                    >
-                                        <img
-                                            src={item.image}
-                                            alt={item.name}
-                                            className="my-3 mt-0 h-12 w-12 rounded-lg bg-gray-50 object-cover"
-                                        />
-                                        {item.name} - x{item.quantity}
-                                        <Button
-                                            onClick={() =>
-                                                removeFromCart(item.id)
-                                            }
-                                            className="text-gray-400 transition hover:text-red-500"
-                                        >
-                                            Delete
-                                        </Button>
-                                    </div>
-                                ))}
-                                <h1> sum {getTotalPrice()}$</h1>
-                                <Button
-                                    className="flex-1 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200"
-                                    onClick={clearCart}
-                                >
-                                    Clear
-                                </Button>
-                                <Button
-                                    className="ml-10 flex-1 rounded-xl bg-green-500 py-3 text-white hover:bg-green-500"
-                                    onClick={handleCheckOut}
-                                >
-                                    Pay
-                                </Button>
-                            </div>
-                        </>
-                    )}
-                </Card>
-            )}
+            {cartOpen && <CartDropdown />}
         </header>
     );
 }

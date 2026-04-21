@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<link rel="preload" as="image" href="/resources/images/homeHeader.webp" fetchpriority="high">
 <head>
+    <link rel="preload" as="image" href="{{ Vite::asset('resources/images/homeHeader.webp') }}" fetchpriority="high">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -24,10 +24,6 @@
         html {
             background-color: oklch(1 0 0);
         }
-
-        html.dark {
-            background-color: oklch(0.145 0 0);
-        }
     </style>
 
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -43,8 +39,7 @@
 
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/app.tsx', "resources/js/Pages/{$page['component']}.tsx"])
-    @if(Request::is('/'))
-    @endif
+
 
     <x-inertia::head>
         <title>Toy Store</title>
