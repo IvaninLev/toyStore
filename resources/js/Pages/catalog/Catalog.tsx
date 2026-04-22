@@ -34,17 +34,19 @@ export default function Catalog({
         <section className="flex text-black">
             <CatalogSidebar maxPriceInDb={maxPriceInDb} />
 
-            <main className="">
+            <main>
                 <div className="grid pb-0 sm:grid-cols-1 sm:space-x-2 md:grid-cols-2 lg:grid-cols-4 lg:space-x-4">
-                    {products.map((product) => (
+                    {products.map((product, index) => (
                         <Card
                             key={product.id}
                             className="mt-16 mb-12 h-82 w-67.5 flex-none items-center border-0 bg-white text-black shadow-sm"
                         >
                             <img
                                 src={product.image}
+                                loading='eager'
+                                fetchPriority={index < 4 ? "high": "auto"   }
                                 className="h-46.25 w-46.25 object-contain"
-                                alt={product.name}
+                                alt=""
                             />
                             <CardTitle className="text-center">
                                 {product.name}
@@ -61,7 +63,7 @@ export default function Catalog({
                 <div className="d-flex flex w-auto items-center justify-center space-x-3">
                     {currentPage !== 1 && (
                         <Button
-                            className="hover:cursor-pointer bg-green-500 text-white hover:bg-green-500"
+                            className="bg-green-500 text-white hover:cursor-pointer hover:bg-green-500"
                             onClick={() => handlePageChange(currentPage - 1)}
                         >
                             prev
@@ -74,7 +76,7 @@ export default function Catalog({
                     </div>
                     {currentPage < lastPage && (
                         <Button
-                            className="hover:cursor-pointer bg-green-500 text-white hover:bg-green-500"
+                            className="bg-green-500 text-white hover:cursor-pointer hover:bg-green-500"
                             onClick={() => handlePageChange(currentPage + 1)}
                         >
                             next

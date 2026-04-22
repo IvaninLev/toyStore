@@ -24,4 +24,4 @@ Route::get('/catalog', function () {
         'products' => Toys::latest()->paginate(PaginationEnum::PAGE_SIZE->value),
     ]);
 });
-Route::post('/webhook/stripe', [WebhookController::class, 'handle']);
+Route::post('/webhook/stripe', [WebhookController::class, 'handle'])->name('webhook.stripe');

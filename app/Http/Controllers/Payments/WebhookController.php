@@ -15,37 +15,37 @@ class WebhookController extends Controller
     private function buildMailData(object $session): array
     {
         $shippingDetails = $this->resolveShippingDetails($session);
-        $address = $shippingDetails?->address
-            ?? $session->customer_details?->address;
+        $address = data_get($shippingDetails, 'address')
+            ?? data_get($session, 'customer_details.address');
 
         return [
             'session_id' => $session->id,
             'email' => $this->resolveEmail($session),
             'amount_total' => $session->amount_total ?? 0,
             'currency' => $session->currency ?? 'usd',
-            'customer_name' => $shippingDetails->name ?? $session->customer_details?->name,
-            'address_line1' => $address?->line1 ?? 'no adress',
-            'address_line2' => $address?->line2,
-            'postal_code' => $address?->postal_code,
-            'city' => $address?->city,
-            'state' => $address?->state,
-            'country' => $address?->country,
+            'customer_name' => data_get($shippingDetails, 'name') ?? data_get($session, 'customer_details.name'),
+            'address_line1' => data_get($address, 'line1', 'no address'),
+            'address_line2' => data_get($address, 'line2'),
+            'postal_code' => data_get($address, 'postal_code'),
+            'city' => data_get($address, 'city'),
+            'state' => data_get($address, 'state'),
+            'country' => data_get($address, 'country'),
 
         ];
     }
 
     private function resolveEmail(object $session): ?string
     {
-        return $session->customer_details->email
-            ?? $session->customer_email
+        return data_get($session, 'customer_details.email')
+            ?? data_get($session, 'customer_email')
             ?? null;
 
     }
 
     private function resolveShippingDetails(object $session): ?object
     {
-        return $session->shipping_details
-            ?? $session->collected_information->shipping_details
+        return data_get($session, 'shipping_details')
+            ?? data_get($session, 'collect.information.shipping_details')
             ?? null;
     }
 
@@ -59,9 +59,11 @@ class WebhookController extends Controller
             $event = Webhook::constructEvent($payload, $sig_header, $endpoint_secret);
         } catch (SignatureVerificationException $e) {
             Log::error('Stripe Webhook: подпись не совпала!');
+
             return response()->json(['error' => 'Invalid signature'], 400);
         } catch (\UnexpectedValueException $e) {
             Log::error('Stripe Webhook: ошибка в данных запроса!');
+
             return response()->json(['error' => 'Invalid payload'], 400);
         }
 
@@ -72,8 +74,9 @@ class WebhookController extends Controller
         $session = $event->data->object;
         $mailData = $this->buildMailData($session);
 
-        if (!$mailData['email']) {
+        if (! $mailData['email']) {
             Log::warning('Stripe Webhook: no email for session', ['session' => $session->id]);
+
             return response()->json(['status' => 'skipped'], 200);
         }
 
@@ -81,5 +84,4 @@ class WebhookController extends Controller
 
         return response()->json(['status' => 'success'], 200);
     }
-
 }
