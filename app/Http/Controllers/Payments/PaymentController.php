@@ -10,8 +10,16 @@ class PaymentController
 {
     public function checkOut(Request $request)
     {
+
+        $validated = $request->validate([
+            'cart' => ['required', 'array'],
+            'cart.*.quantity' => ['required', 'integer', 'min:1'],
+            'cart.*.price' => ['required', 'numeric', 'min:0'],
+        ]);
+
+
         Stripe::setApiKey(config('services.stripe.secret'));
-        $cartItems = $request->input('cart');
+        $cartItems = $validated['cart'];
         $lineItems = [];
 
         foreach ($cartItems as $item) {
