@@ -3,18 +3,15 @@
 namespace App\Http\Controllers\Payments;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderResource;
 use App\Http\Services\StripeService;
-use App\Mail\OrderProcessedMail;
+use App\Jobs\SendOrderEmailJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Webhook;
 
 class WebhookController extends Controller
 {
-
     public function handle(Request $request, StripeService $stripeService)
     {
 
@@ -70,16 +67,16 @@ class WebhookController extends Controller
 
         if (empty($mailData['email'])) {
             Log::warning('Stripe Webhook: no email', ['session' => $session->id]);
+
             return response()->json(['status' => 'skipped'], 200);
         }
 
         try {
-            Mail::to($mailData['email'])->send(new OrderProcessedMail($mailData));
+            SendOrderEmailJob::dispatch($mailData);
         } catch (\Throwable $e) {
             Log::error('Mail failed', ['message' => $e->getMessage()]);
         }
 
         return response()->json(['status' => 'success'], 200);
     }
-
 }
