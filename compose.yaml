@@ -25,6 +25,23 @@ services:
             - mysql
             - redis
             - mailpit
+    horizon:
+        build:
+            context: './vendor/laravel/sail/runtimes/8.4'
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: 'sail-8.4/app'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - hotels
+        depends_on:
+            - redis
+        command: [ 'php', 'artisan', 'horizon' ]
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
