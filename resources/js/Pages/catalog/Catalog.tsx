@@ -10,11 +10,13 @@ export default function Catalog({
     lastPage,
     currentPage,
     maxPriceInDb,
+    filters,
 }: {
     products: Toy[];
     lastPage: number;
     currentPage: number;
     maxPriceInDb: number;
+    filters: any;
 }) {
     const addToCart = useCartStore((state) => state.addToCart);
 
@@ -22,9 +24,13 @@ export default function Catalog({
         if (page >= 1 && page <= lastPage) {
             router.get(
                 '/catalog',
-                { page },
+                {
+                    ...filters,
+                    page,
+                },
                 {
                     preserveScroll: true,
+                    preserveState: true,
                 },
             );
         }
@@ -43,8 +49,8 @@ export default function Catalog({
                         >
                             <img
                                 src={product.image}
-                                loading='eager'
-                                fetchPriority={index < 4 ? "high": "auto"   }
+                                loading="eager"
+                                fetchPriority={index < 4 ? 'high' : 'auto'}
                                 className="h-46.25 w-46.25 object-contain"
                                 alt=""
                             />

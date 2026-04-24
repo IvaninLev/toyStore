@@ -12,11 +12,11 @@ class PaymentController
     {
 
         $validated = $request->validate([
-            'cart' => ['required', 'array'],
-            'cart.*.quantity' => ['required', 'integer', 'min:1'],
+            'cart' => ['required', 'array', 'min:1'],
+            'cart.*.name' => ['required', 'string', 'max:255'],
             'cart.*.price' => ['required', 'numeric', 'min:0'],
+            'cart.*.quantity' => ['required', 'integer', 'min:1'],
         ]);
-
 
         Stripe::setApiKey(config('services.stripe.secret'));
         $cartItems = $validated['cart'];
@@ -45,6 +45,7 @@ class PaymentController
             'success_url' => route('success'),
             'cancel_url' => route('cancel'),
         ]);
+
         return response()->json(['url' => $session->url]);
     }
 }

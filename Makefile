@@ -44,3 +44,8 @@ build-assets:
 
 profile:
 	vendor/bin/sail npm run profile
+
+test:
+	./vendor/bin/pest
+
+

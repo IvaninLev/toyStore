@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class orderRequest extends FormRequest
+class OrderRequest extends FormRequest
 {
     public function rules(): array
     {

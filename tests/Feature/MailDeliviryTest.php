@@ -1,12 +1,14 @@
 <?php
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Mail\OrderProcessedMail;
 use Stripe\Event;
 use Stripe\Webhook;
 
-it('completes the order after successful payment', function () {
-    Mail::fake();
+uses(RefreshDatabase::class);
 
+test('stripe webhook triggers order processed email', function () {
+    Mail::fake();
 
     $sessionData = [
         'id' => 'cs_test_123',
@@ -27,16 +29,15 @@ it('completes the order after successful payment', function () {
         $mock->shouldReceive('constructEvent')->andReturn($mockEvent);
     });
 
-    $response = $this->postJson(route('webhook.stripe'), [
+    $this->postJson(route('webhook.stripe'), [
         'id' => 'ev_test_123',
         'type' => 'checkout.session.completed',
     ], [
         'Stripe-Signature' => 'fake_signature',
-    ]);
-    $response->assertStatus(200);
-    dump($response->json());
-    Illuminate\Support\Facades\Mail::assertSent(OrderProcessedMail::class, function ($mail) {
-        return $mail->hasTo('test@example.com') &&
-            $mail->mailData['amount_total'] === 3000;
+    ])->assertOk();
+
+    Mail::assertSent(OrderProcessedMail::class, function (OrderProcessedMail $mail) {
+        return $mail->hasTo('test@example.com')
+            && ($mail->mailData['amount_total'] ?? null) === 3000;
     });
 });

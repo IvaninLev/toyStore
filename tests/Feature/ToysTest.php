@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('filters toys by min price', function () {
+it('filters toys by max price', function () {
     Toys::factory()->create(['price' => 50, 'type' => 'wooden']);
     Toys::factory()->create(['price' => 200, 'type' => 'stuffed']);
 

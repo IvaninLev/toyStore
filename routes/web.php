@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Payments\PaymentController;
 use App\Http\Controllers\ToysController;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,5 +19,6 @@ Route::get('/payment/cancel', function () {
 Route::get('/catalog', [ToysController::class, 'catalogIndex'])->name('catalog');
 
 Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
+
 
 require __DIR__.'/settings.php';

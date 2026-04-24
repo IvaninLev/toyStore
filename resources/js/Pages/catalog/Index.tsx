@@ -10,9 +10,11 @@ interface PaginatedProducts {
 export default function Index({
     products,
     maxPriceInDb,
+    filters,
 }: {
     products: PaginatedProducts;
     maxPriceInDb: number;
+    filters: object;
 }) {
     return (
         <>
@@ -22,6 +24,7 @@ export default function Index({
                     lastPage={products.last_page}
                     currentPage={products.current_page}
                     maxPriceInDb={maxPriceInDb}
+                    filters={filters}
                 />
             </main>
         </>
