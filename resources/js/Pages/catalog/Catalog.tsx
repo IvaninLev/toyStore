@@ -1,4 +1,6 @@
 import { router } from '@inertiajs/react';
+import { Menu } from 'lucide-react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle } from '@/components/ui/card';
 import { CatalogSidebar } from '@/Pages/catalog/CatalogSidebar';
@@ -19,6 +21,7 @@ export default function Catalog({
     filters: any;
 }) {
     const addToCart = useCartStore((state) => state.addToCart);
+    const [isOpen, setOpen] = useState(false);
 
     const handlePageChange = (page: number) => {
         if (page >= 1 && page <= lastPage) {
@@ -38,7 +41,12 @@ export default function Catalog({
 
     return (
         <section className="flex text-black">
-            <CatalogSidebar maxPriceInDb={maxPriceInDb} />
+            <Menu  className="md:hidden" onClick={() => setOpen(!isOpen)}/>
+            <CatalogSidebar
+                setOpen={setOpen}
+                isOpen={isOpen}
+                maxPriceInDb={maxPriceInDb}
+            />
 
             <main>
                 <div className="grid pb-0 sm:grid-cols-1 sm:space-x-2 md:grid-cols-2 lg:grid-cols-4 lg:space-x-4">

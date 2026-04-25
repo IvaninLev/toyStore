@@ -20,9 +20,11 @@ export function CartDropdown() {
 
     return (
         <Card className="absolute top-full right-0 z-50 mt-2 mr-10 flex max-h-105 flex-col bg-white pt-3 text-black shadow-xl">
-            <h3 className="border-b pb-2 pl-5 font-bold">Your Cart</h3>
+            <h3 className="border-b pb-2 font-bold">Your Cart</h3>
             {cart.length === 0 ? (
-                <div>Empty</div>
+                <div className="flex  justify-center">
+                    <span> Empty</span>
+                </div>
             ) : (
                 <>
                     <OverlayScrollbarsComponent

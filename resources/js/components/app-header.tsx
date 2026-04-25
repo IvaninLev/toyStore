@@ -9,7 +9,7 @@ export function AppHeader() {
     const totalItems = cart.reduce((total, items) => total + items.quantity, 0);
 
     return (
-        <header className="sticky top-0 z-50">
+        <header className="sticky top-0 z-50 w-full mx-auto">
             <div className="bg-green-500 text-white">
                 <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 text-sm sm:px-6 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex flex-col gap-1 text-center lg:flex-row lg:gap-6 lg:text-left">

@@ -1,15 +1,34 @@
 import { Link, router } from '@inertiajs/react';
 import * as Slider from '@radix-ui/react-slider';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
-export function CatalogSidebar({ maxPriceInDb }: { maxPriceInDb: number }) {
+export function CatalogSidebar({
+    maxPriceInDb,
+    isOpen,
+    setOpen,
+}: {
+    maxPriceInDb: number;
+    isOpen: boolean;
+    setOpen: any;
+}) {
     const [price, setPrice] = useState([0, maxPriceInDb || 1000]);
 
     return (
-        <aside className="w-72 flex-none border-r bg-white p-6">
+        <aside
+            className={
+                `fixed w-72 border-r bg-white p-6 shadow-2xl
+             transition-transform duration-300 ease-in-out
+             ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+           sticky md:block md:translate-x-0 md:shadow-none`
+        }
+        >
+            <Button className="md:hidden" onClick={() => setOpen(!isOpen)}>
+                close
+            </Button>
             <h2 className="mb-6 text-xl font-bold">Filters</h2>
 
-            <nav className="space-y-6">
+            <nav className=" space-y-6">
                 <div>
                     <h3 className="mb-4 text-sm font-semibold tracking-wider text-gray-500 uppercase">
                         Categories
