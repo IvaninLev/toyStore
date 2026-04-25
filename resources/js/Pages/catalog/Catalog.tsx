@@ -1,9 +1,9 @@
 import { router } from '@inertiajs/react';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
+import { CatalogSidebar } from '@/components/CatalogSidebar';
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle } from '@/components/ui/card';
-import { CatalogSidebar } from '@/Pages/catalog/CatalogSidebar';
 import { useCartStore } from '@/stores/useCartStore';
 import type { Toy } from '@/types';
 
@@ -41,19 +41,20 @@ export default function Catalog({
 
     return (
         <section className="flex text-black">
-            <Menu  className="md:hidden" onClick={() => setOpen(!isOpen)}/>
             <CatalogSidebar
                 setOpen={setOpen}
                 isOpen={isOpen}
                 maxPriceInDb={maxPriceInDb}
             />
 
-            <main>
-                <div className="grid pb-0 sm:grid-cols-1 sm:space-x-2 md:grid-cols-2 lg:grid-cols-4 lg:space-x-4">
+            <main className="w-full">
+                <Menu className="md:hidden" onClick={() => setOpen(!isOpen)} />
+
+                <div className="grid pb-0 sm:grid-cols-1 sm:justify-items-center sm:space-x-2 md:grid-cols-2 lg:grid-cols-4 lg:space-x-4">
                     {products.map((product, index) => (
                         <Card
                             key={product.id}
-                            className="mt-16 mb-12 h-82 w-67.5 flex-none items-center border-0 bg-white text-black shadow-sm"
+                            className="mx-auto mt-16 mb-12 h-82 w-67.5 items-center border-0 bg-white text-black shadow-sm"
                         >
                             <img
                                 src={product.image}
