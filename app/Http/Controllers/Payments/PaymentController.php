@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Payments;
 
+use App\Models\Toys;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
@@ -10,6 +11,7 @@ class PaymentController
 {
     public function checkOut(Request $request)
     {
+
 
         $validated = $request->validate([
             'cart' => ['required', 'array', 'min:1'],
@@ -34,6 +36,7 @@ class PaymentController
                 'quantity' => $item['quantity'],
             ];
         }
+
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,

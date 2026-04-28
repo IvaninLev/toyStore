@@ -14,6 +14,8 @@ class Toys extends Model
         'name',
         'description',
         'image',
+        'price',
+        'stock',
         'type',
         'price',
     ];

@@ -1,4 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
+import mobileHeader from '@/../images/homeHeader-640.webp';
 import header from '@/../images/homeHeader.webp';
 import { Card, CardTitle } from '@/components/ui/card';
 
@@ -10,9 +11,11 @@ export default function HomeHeader() {
             </Head>
             <img
                 src={header}
+                srcSet={`${mobileHeader} 640w, ${header} 1920w`}
+                sizes="(max-width: 640px) 100vw, 50vw"
                 alt=""
                 fetchPriority="high"
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full object-cover sm:w-full"
                 loading="eager"
                 aria-hidden="true"
                 decoding="async"
@@ -23,13 +26,8 @@ export default function HomeHeader() {
                     Say Hello to ToyStore!
                 </span>
 
-                <CardTitle
-                    className="font-sans text-black"
-                    style={{ fontWeight: 400 }}
-                >
-                    <span className="block text-3xl leading-tight sm:text-4xl sm:leading-tight lg:text-[40px]">
-                        Free Ecommerce Template for Webflow
-                    </span>
+                <CardTitle className="font-sans text-3xl leading-tight font-normal text-black sm:text-4xl lg:text-[40px]">
+                    Free Ecommerce Template for Webflow
                 </CardTitle>
                 <Link
                     href="/catalog"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Payments;
 use App\Http\Controllers\Controller;
 use App\Http\Services\StripeService;
 use App\Jobs\SendOrderEmailJob;
+use App\Models\Toys;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Stripe\Exception\SignatureVerificationException;
@@ -62,6 +63,22 @@ class WebhookController extends Controller
         }
 
         $session = $event->data->object;
+
+        $toyId = $session->metadata->toy_id ?? null;
+        $quantity = (int) ($session->metaData->quantity ?? 1);
+
+        if ($toyId) {
+            $updated = Toys::where('id', $toyId)
+                ->where('stock', '>=', $quantity)
+                ->decrement('stock', $quantity);
+
+            if (! $updated) {
+                Log::error('Stripe Webhook: toy_id not found', [
+                    'toy_id' => $toyId,
+                    'session_id' => $session->id,
+                ]);
+            }
+        }
 
         $mailData = $stripeService->getMailData($session);
 

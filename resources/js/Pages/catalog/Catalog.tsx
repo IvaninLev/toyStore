@@ -50,7 +50,7 @@ export default function Catalog({
             <main className="w-full">
                 <Menu className="md:hidden" onClick={() => setOpen(!isOpen)} />
 
-                <div className="grid pb-0 sm:grid-cols-1 sm:justify-items-center sm:space-x-2 md:grid-cols-2 lg:grid-cols-4 lg:space-x-4">
+                <div className="grid pb-0 sm:grid-cols-1 sm:justify-items-center sm:space-x-2 md:grid-cols-2 lg:grid-cols-3 lg:space-x-">
                     {products.map((product, index) => (
                         <Card
                             key={product.id}

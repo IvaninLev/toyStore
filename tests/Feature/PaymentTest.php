@@ -34,7 +34,6 @@ it('completes the order after successful payment', function () {
         'Stripe-Signature' => 'fake_signature',
     ]);
     $response->assertStatus(200);
-    dump($response->json());
     Illuminate\Support\Facades\Mail::assertSent(OrderProcessedMail::class, function ($mail) {
         return $mail->hasTo('test@example.com') &&
             $mail->mailData['amount_total'] === 3000;

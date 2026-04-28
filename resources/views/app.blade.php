@@ -24,6 +24,7 @@
         html {
             background-color: oklch(1 0 0);
         }
+
     </style>
 
     <link rel="icon" href="/favicon.ico" sizes="any">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\PaginationEnum;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Payments\WebhookController;
 use App\Models\Toys;
 use Illuminate\Http\Request;
@@ -24,4 +25,7 @@ Route::get('/catalog', function () {
         'products' => Toys::latest()->paginate(PaginationEnum::PAGE_SIZE->value),
     ]);
 });
+
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+
 Route::post('/webhook/stripe', [WebhookController::class, 'handle'])->name('webhook.stripe');

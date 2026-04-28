@@ -23,6 +23,8 @@ export default function ToysScroller({
 
     const { items, list, sentinelRef } = useInfiniteToys(endpoint);
 
+
+
     return (
         <section
             className={`container bg-[#F8F8F8] text-black ${sectionClassName ?? ''}`}
@@ -34,7 +36,6 @@ export default function ToysScroller({
                 options={{
                     scrollbars: {
                         autoHide: 'never',
-
                         clickScroll: true,
                     },
                 }}
