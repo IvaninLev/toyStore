@@ -34,4 +34,4 @@ Running the Application:
 Backend: Already running via make up (Sail).
 
 Frontend (Vite): bash
-make run-dev-front
+make start
