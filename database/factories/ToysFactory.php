@@ -17,7 +17,8 @@ class ToysFactory extends Factory
             'description' => $this->faker->text(),
             'type' => $this->faker->randomElement(['stuffed', 'wooden']),
             'image' => 'https://loremflickr.com/400/400/toy,plush?lock=' . $this->faker->unique()->numberBetween(1, 1000),
-            'price' => $this->faker->randomNumber(),
+            'price' => $this->faker->numberBetween(100, 1000),
+            'stock' => $this->faker->numberBetween(1, 10),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

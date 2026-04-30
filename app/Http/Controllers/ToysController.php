@@ -14,11 +14,16 @@ class ToysController extends Controller
     public function index()
     {
         $stuffed = ToysResource::collection(
-            Toys::where('type', 'stuffed')->latest()->cursorPaginate(PaginationEnum::PAGE_SIZE->value)
+            Toys::where('type', 'stuffed')
+                ->inStock()
+                ->latest()
+                ->cursorPaginate(PaginationEnum::PAGE_SIZE->value)
         );
 
         $wooden = ToysResource::collection(
-            Toys::where('type', 'wooden')->latest()->cursorPaginate(PaginationEnum::PAGE_SIZE->value)
+            Toys::where('type', 'wooden')
+                ->inStock()
+                ->latest()->cursorPaginate(PaginationEnum::PAGE_SIZE->value)
         );
 
         return Inertia::render('home/Index', [
@@ -58,10 +63,10 @@ class ToysController extends Controller
                 $query->where('type', $category);
             })
             ->when($request->filled('min'), function ($query) use ($request) {
-                $query->where('price', '>=', (int) $request->min);
+                $query->where('price', '>=', (int)$request->min);
             })
             ->when($request->filled('max'), function ($query) use ($request) {
-                $query->where('price', '<=', (int) $request->max);
+                $query->where('price', '<=', (int)$request->max);
             })
             ->latest()
             ->paginate(PaginationEnum::PAGE_SIZE->value)
@@ -70,7 +75,7 @@ class ToysController extends Controller
         return Inertia::render('catalog/Index', [
             'products' => $toys,
             'filters' => $request->only(['category', 'min', 'max']),
-                'maxPriceInDb' => \Cache::remember('toys_max_price', now()->addHour(), function () {
+            'maxPriceInDb' => \Cache::remember('toys_max_price', now()->addHour(), function () {
                 return Toys::max('price') ?? 1000;
             }),
         ]);

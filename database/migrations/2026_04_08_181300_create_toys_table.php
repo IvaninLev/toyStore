@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->string('image');
             $table->string('type');
             $table->integer('price');
+            $table->unsignedInteger('stock');
+
             $table->timestamps();
         });
     }

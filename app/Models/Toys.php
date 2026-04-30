@@ -14,9 +14,13 @@ class Toys extends Model
         'name',
         'description',
         'image',
-        'price',
         'stock',
         'type',
         'price',
     ];
+
+    public function scopeInStock($query)
+    {
+        return $query->where('stock', '>', 0);
+    }
 }

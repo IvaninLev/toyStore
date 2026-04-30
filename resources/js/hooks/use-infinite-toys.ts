@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { useAsyncList } from 'react-stately';
 import type { Toy } from '@/types';
 
-export function         useInfiniteToys(endpoint: string) {
+export function  useInfiniteToys(endpoint: string) {
     const isLoadingRef = useRef(false);
 
     const list = useAsyncList<Toy>({
