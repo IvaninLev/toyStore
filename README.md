@@ -49,12 +49,18 @@ make recreate — Full rebuild of the environment.
 make test — Run Pest test suite.
 
 make artisans <command> — Run artisan commands inside Sail.
+## 📸 Previews
 
-Screenshots:
-<img width="1890" height="930" alt="image" src="https://github.com/user-attachments/assets/8cd916d5-a41b-44e0-8ace-60570e4d4494" />
-<img width="1890" height="930" alt="image" src="https://github.com/user-attachments/assets/ebcd98f7-6900-484b-af08-f2d69285174f" />
-<img width="801" height="877" alt="image" src="https://github.com/user-attachments/assets/c0256b9a-92ec-4500-a621-ce78d1141e78" />
-<img width="1875" height="933" alt="image" src="https://github.com/user-attachments/assets/168ea452-143b-4663-9f9d-1f0e8081b17d" />
-<img width="1875" height="933" alt="image" src="https://github.com/user-attachments/assets/34c63472-aecf-4385-bafe-4dc9bdb31c5e" />
+<details>
+  <summary>Click to view screenshots</summary>
+  
 
+  <img src="https://github.com/user-attachments/assets/8cd916d5-a41b-44e0-8ace-60570e4d4494" width="100%" />
+  
 
+  <img src="https://github.com/user-attachments/assets/ebcd98f7-6900-484b-af08-f2d69285174f" width="100%" />
+
+  <img src="https://github.com/user-attachments/assets/c0256b9a-92ec-4500-a621-ce78d1141e78" width="50%" />
+  
+  <img src="https://github.com/user-attachments/assets/168ea452-143b-4663-9f9d-1f0e8081b17d" width="100%" />
+</details>
